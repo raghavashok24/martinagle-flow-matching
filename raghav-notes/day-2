@@ -1,0 +1,19 @@
+***DAY 2 is INCOMPLETE***
+
+2. PATHS AND DISTRIBUTIONS
+
+Nobody knows where a stock will be in the future. To reason about it,
+we describe the future in two ways.
+
+A path is one possible route the price could take from today to some
+future date. Each path is one possible future.
+
+A distribution describes the spread of where the price could be on one
+particular date, and how likely each level is.
+
+These are different pieces of information. A distribution tells you
+where the price might be on a given date. It says nothing about how it
+got there. That difference drives the rest of these notes.
+
+A model of the market is a rule for generating paths. Simulating
+thousands of them to price a product is called Monte Carlo simulation.
