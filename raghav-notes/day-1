@@ -1,0 +1,65 @@
+1. BACKGROUND: THE OPTIONS MARKET
+
+What an option is
+
+An option is a contract that gives its owner the right, but not the
+obligation, to buy or sell an asset at a fixed price on or before a
+fixed date. The asset is called the underlying, usually a stock or a
+stock index like the S&P 500. The fixed price is the strike, and the
+fixed date is the expiry (also called maturity).
+
+  - A call is the right to buy at the strike.
+  - A put is the right to sell at the strike.
+
+How it works
+
+The buyer pays the seller an upfront price, called the premium, for
+this right. If the market moves in the buyer's favor, the buyer uses
+the right, which is called exercising the option. If it doesn't, the
+buyer lets the option expire and loses only the premium. The seller
+keeps the premium either way, but must follow through if the buyer
+exercises.
+
+People buy calls to profit if prices rise, and puts to profit if prices
+fall or to insure something they already own. An option's price
+depends mainly on where the underlying is relative to the strike, how
+much time is left, and how much the underlying tends to swing
+(volatility).
+
+Standard calls and puts are called vanilla options. They trade on
+exchanges and their prices are public. Exotic options are custom
+contracts with more complicated payoffs, sold by banks directly to
+clients. Many depend on the path the price takes over time, not just
+where it ends. For example, one might pay only if the price never
+crosses a certain level.
+
+Who is involved and what they do
+
+  Investors: individuals, funds, pension plans and companies. They buy
+  and sell options to hedge, speculate or earn income.
+
+  Brokers: take investors' orders and send them to the market.
+
+  Exchanges: marketplaces like Cboe where vanilla options trade. They
+  match buyers and sellers and publish prices all day.
+
+  Market makers: firms always ready to buy or sell, so there is always
+  someone on the other side of a trade. They earn the small gap between
+  their buying and selling prices.
+
+  Clearinghouse: in the US, the Options Clearing Corporation. It stands
+  between buyer and seller on every listed trade and guarantees the
+  contract is honored if one side defaults.
+
+  Banks (dealers): create and sell exotic options to clients, then hold
+  the risk. Their traders value these positions daily, and their
+  hedgers trade stock and vanilla options to offset the risk.
+
+  Risk and model validation teams: inside banks. Risk teams measure how
+  much the bank could lose in bad markets. Validation teams check
+  whether the bank's pricing models can be trusted.
+
+  Regulators: the SEC oversees exchanges and brokers. Bank regulators
+  (the Federal Reserve, OCC and FDIC) oversee how banks manage the risk
+  of relying on models. Their current guidance is SR 26-2 (April 2026),
+  which replaced SR 11-7 (2011).
