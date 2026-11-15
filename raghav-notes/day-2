@@ -17,3 +17,81 @@ got there. That difference drives the rest of these notes.
 
 A model of the market is a rule for generating paths. Simulating
 thousands of them to price a product is called Monte Carlo simulation.
+
+2.1 OPTION PRICING BASICS
+
+A call pays nothing if the price ends below the strike, and pays the
+difference if it ends above. Since we don't know where the price will
+end, the fair price of an option is its average payoff across every
+possible ending price, weighted by how likely each one is.
+
+So an option's price depends on the full distribution of where the
+stock could end up, not on a single forecast.
+
+Some options go further. Path-dependent options pay based on the route
+the price takes, not just where it ends. For example, a barrier option
+switches on or off if the price touches a certain level, and an Asian
+option pays on the average price over time. To price these, you need
+the odds of every possible path.
+
+
+2.2 THE OPTION SURFACE
+
+Exchanges publish option prices for many strikes and many expiry dates.
+Together they form the option surface.
+
+Comparing call prices at neighboring strikes reveals how likely the
+stock is to end near each price on that expiry date. Repeat this across
+all strikes and you recover the market's full distribution for that
+date (the Breeden-Litzenberger idea). Do it for every expiry date and
+you get one distribution per date.
+
+What the surface does not tell us is how those dates connect: how the
+price travels from one date to the next. Path-dependent options depend
+on exactly that missing piece.
+
+
+2.3 HOW BANKS PRICE EXOTIC OPTIONS
+
+Banks choose a model to fill in the missing paths:
+
+  1. Calibrate: tune the model until it matches the option surface.
+  2. Simulate: generate thousands of price paths from it.
+  3. Price and hedge: average each payoff over the paths.
+  4. Reuse: send the same paths to risk, stress tests and AI hedging
+     tools.
+
+Everything after step 1 trusts the model. Any flaw in it spreads to
+every price, hedge and risk number.
+
+
+2.4 CURRENT MODELING APPROACHES
+
+A good pricing simulator must pass two tests: no free money, and an
+exact match to the option surface.
+
+  - Classical and exact math methods (local volatility, martingale
+    optimal transport) pass both tests. But they only work for one or
+    two assets or dates, and local volatility is one fixed choice with
+    no strong reason to prefer it.
+
+  - AI generators scale to many assets and look realistic. But they
+    were built for realism, not pricing. They either ignore the
+    no-free-money rule or only discourage breaking it with a penalty,
+    which leaves some free money behind.
+
+No current method both passes the tests and scales.
+
+2.5 WHY SMALL ERRORS MATTER
+
+A small amount of leftover free money is not a small problem.
+
+  - Free money can be scaled up: a riskless profit can just be repeated
+    at larger size.
+  - AI hedging tools trained on the simulator will find any leak and
+    learn to exploit it. Those profits don't exist in the real market.
+  - Nobody downstream knows how big the leak is, so a validation team
+    has nothing to check.
+
+When the rule at stake is the fundamental theorem of asset pricing,
+"mostly satisfied" isn't acceptable.
