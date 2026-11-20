@@ -1,0 +1,137 @@
+
+==============================================================================
+EXPERIMENT 0 -- Toy sanity checks (the debugging harness)
+==============================================================================
+(a) Toy option surface
+    strike    [ 70.  80.  90. 100. 110. 120. 130.]
+    C1(K)     [30.  20.  10.   2.5  0.   0.   0. ]
+    C2(K)     [30.    20.    10.625  3.75   0.625  0.     0.   ]
+    butterflies date 1 (K=80..120): [0.   0.25 0.5  0.25 0.  ]
+    butterflies date 2 (K=80..120): [0.0625 0.25   0.375  0.25   0.0625]
+
+(b) Convex order test
+    means: 100.0, 100.0;  calendar spreads C2-C1: [0.    0.    0.625 1.25  0.625 0.    0.   ]
+
+(c) The four named models
+    model          defect   W1 d1   W1 d2    price
+    tree            0.000   0.000   0.000    5.000
+    min table       0.000   0.000   0.000    2.500
+    independent     5.000   0.000   0.000    9.375
+    non-example     1.250   0.000   1.250    6.250
+
+All toy sanity checks passed.
+
+==============================================================================
+EXPERIMENT 1 -- Exact arbitrage-free price bounds by linear programming
+==============================================================================
+Arbitrage-free interval for |X2 - X1|: [2.5000, 5.0000]   (notes: [2.5, 5])
+
+Cheapest fair table (x16):
+ [[-0.  4.  0.  0.  0.]
+ [ 1.  0.  6. -0.  1.]
+ [ 0.  0.  0.  4. -0.]]
+
+Most expensive fair table (x16):
+ [[1. 2. 1. 0. 0.]
+ [0. 2. 4. 2. 0.]
+ [0. 0. 1. 2. 1.]]
+
+Distance of each named model's price to the interval:
+  tree         price  5.000   distance  0.000
+  independent  price  9.375   distance  4.375
+  non-example  price  6.250   distance  1.250
+
+Vanilla call (X2-100)^+: [3.7500, 3.7500]  (a point: the surface fixes it)
+
+Why this baseline dies: LP unknowns with 20 grid prices per date
+  2 dates:          400 unknowns
+  3 dates:        8,000 unknowns
+  4 dates:      160,000 unknowns
+  6 dates:   64,000,000 unknowns
+
+==============================================================================
+EXPERIMENT 2 -- The entropic bridge by exact alternating projections
+==============================================================================
+Start at R: defect 6.67, price 13.33   (notes: 6.67, 13.33)
+
+Marginal step = one row+column sweep per pass (matches Appendix A of the notes)
+        after marginal step        after martingale step
+pass    defect   W1(d2)  price     defect   W1(d2)  price
+   1     5.000   0.000   9.375     0.000   1.797   6.914
+   2     0.979   0.000   6.037     0.000   0.727   5.836
+   3     0.497   0.000   5.425     0.000   0.408   5.357
+   4     0.294   0.000   5.127     0.000   0.251   5.097
+   5     0.185   0.000   4.957     0.000   0.161   4.941
+   8     0.054   0.000   4.737     0.000   0.049   4.734
+  20     0.001   0.000   4.642     0.000   0.001   4.642
+ 400     0.000   0.000   4.641     0.000   0.000   4.641
+
+Marginal step = exact marginal projection per pass
+        after marginal step        after martingale step
+pass    defect   W1(d2)  price     defect   W1(d2)  price
+   1     5.000   0.000   9.375     0.000   1.797   6.914
+   2     1.104   0.000   5.987     0.000   0.824   5.757
+   3     0.543   0.000   5.348     0.000   0.449   5.273
+   4     0.305   0.000   5.050     0.000   0.262   5.020
+   5     0.181   0.000   4.889     0.000   0.159   4.874
+   8     0.043   0.000   4.701     0.000   0.039   4.699
+  20     0.000   0.000   4.641     0.000   0.000   4.641
+ 400     0.000   0.000   4.641     0.000   0.000   4.641
+
+Bridge P* (rows 90/100/110, columns 80..120):
+ [[0.056 0.14  0.051 0.003 0.   ]
+ [0.006 0.107 0.274 0.107 0.006]
+ [0.    0.003 0.051 0.14  0.056]]
+
+price under P*   : 4.641   (inside [2.5, 5.0])
+defect of P*     : 1.60e-14
+KL(P*   || R)    : 0.602   (notes: 0.602)
+KL(tree || R)    : 0.629   (notes: 0.629)
+KL(min  || R)    : 1.301   (notes: 1.300)
+
+Bridge price under Gaussian random-walk references:
+  spread  5.0: 4.641
+  spread 10.0: 4.641
+  spread 20.0: 4.641
+  spread 40.0: 4.641
+
+==============================================================================
+EXPERIMENT 3 -- Can a neural trader measure free money?
+==============================================================================
+20000 sampled paths per model; half used for training, half held out
+
+model              exact defect  trader (held out)  trader (train)  cheating
+tree (fair)               0.000             -0.111           0.072     9.941
+min table (fair)          0.000              0.156           0.063     7.438
+independent               5.000              4.930           5.179    14.430
+non-example               1.250              1.275           1.219    11.251
+
+Read: 'trader (held out)' should track 'exact defect'.
+      'cheating' is large even for fair models -- never let H_t see X_{t+1}.
+
+==============================================================================
+EXPERIMENT 4 -- Synthetic truth (Heston) and the naive baselines
+==============================================================================
+Heston truth: 100000 paths, maturities [0.25 0.5  0.75 1.  ], params {'v0': 0.04, 'kappa': 1.5, 'theta': 0.04, 'xi': 0.5, 'rho': -0.7}
+mean price at each maturity (should be 100.0): [ 99.977 100.     99.968  99.994]
+
+The two tests
+model                      sum W1  defect (binned)  defect (trader)
+heston (fresh sample)       0.322            0.032            0.013
+independent                 0.000           30.075           29.954
+comonotone                  0.000            6.683            6.612
+black-scholes              15.520            0.216            0.165
+
+Repricing (truth, then each model's price and its error)
+payoff              truth                heston           independent            comonotone         black-scholes
+call K=100          7.061       7.061 (-0.000)       7.061 (-0.000)       7.061 (-0.000)       8.417 (+1.356)
+asian call          4.973       5.004 (+0.031)       2.907 (-2.066)       5.513 (+0.540)       5.746 (+0.773)
+up-out call 120     4.108       4.123 (+0.015)       3.901 (-0.207)       4.341 (+0.233)       1.936 (-2.172)
+lookback            9.200       9.166 (-0.034)      13.678 (+4.478)       7.068 (-2.131)      12.178 (+2.978)
+cliquet            26.775      26.661 (-0.114)      55.094 (+28.318)      14.148 (-12.627)      33.805 (+7.030)
+
+Read: independent and comonotone match every vanilla (W1 = 0) and still
+      misprice the path-dependent payoffs; their defect says why.
+      Black-Scholes is fair (defect ~ 0) but misses the surface (W1 > 0).
+      Defects within about +-0.2 of zero are Monte Carlo noise at this sample size;
+      the 'heston (fresh sample)' row is the noise floor for every column.
