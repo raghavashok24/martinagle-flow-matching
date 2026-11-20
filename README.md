@@ -33,23 +33,14 @@ baselines-1/                 first baseline experiments (see its README)
 
 ## 3. Timeline
 
-**Lecture notes** (seven-day build)
+**Lecture notes** 
 
-| Day | Output | Owner |
+
 |---|---|---|
-| 1 | Chapter 1; formula inventory; reference list | Raghav; Aarav |
-| 2 | Chapter 2; toy examples | Raghav; Aarav |
-| 3 | Chapter 3: mathematical foundations | Aarav |
-| 4 | Chapter 4: generative modelling | Raghav |
-| 5 | Chapters 5 and 6: the method and the v2.0 developments | both |
-| 6 | Chapters 7, 8, 0 and 9 | both |
-| 7 | Cold read, polish, freeze | both |
-
-**Research** (twelve-week plan from the proposal; weeks are relative)
-
-| Weeks | Work |
-|---|---|
-| 1–2 | Theory: pricing certificate in the discrete case; convergence write-up |
-| 3–6 | Implement MFM; experiments E1 (synthetic truth) and E2 (exact solvers) |
-| 7–10 | Experiments E3 (SPX), E4 (baskets), E5 (deep hedging) |
-| 11–12 | Multi-asset scaling; paper assembly |
+| 1 | Chapter 1; formula inventory; reference list 
+| 2 | Chapter 2; toy examples 
+| 3 | Chapter 3: mathematical foundations
+| 4 | Chapter 4: generative modelling
+| 5 | Chapters 5 and 6: the method and the v2.0 developments 
+| 6 | Chapters 7, 8, 0 and 9 
+| 7 | Cold read, polish, freeze
