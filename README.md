@@ -31,16 +31,3 @@ lecture-notes/
 baselines-1/                 first baseline experiments (see its README)
 ```
 
-## 3. Timeline
-
-**Lecture notes** 
-
-
-|---|---|---|
-| 1 | Chapter 1; formula inventory; reference list 
-| 2 | Chapter 2; toy examples 
-| 3 | Chapter 3: mathematical foundations
-| 4 | Chapter 4: generative modelling
-| 5 | Chapters 5 and 6: the method and the v2.0 developments 
-| 6 | Chapters 7, 8, 0 and 9 
-| 7 | Cold read, polish, freeze
